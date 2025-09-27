@@ -1,0 +1,11 @@
+spring:
+  application:
+   name : api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: public-api
+          uri: http://localhost:8081
+          predicates:
+            - Path=/swagger-ui/**, /v3/api-docs/**, /swagger-resources/**
