@@ -1,4 +1,4 @@
-package com.globalskills.api_gateway;
+package com.globalskills.api_gateway.Gateway.Controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

@@ -28,8 +28,7 @@ public class SecurityConfig {
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/swagger-resources/**",
-            "/user-service/v3/api-docs/**",
-            "https://user-service-ngah.onrender.com/v3/api-docs/**"
+            "/api/v3/api-docs/**"
     );
 
     @Bean
