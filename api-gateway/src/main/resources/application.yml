@@ -1,11 +1,48 @@
+server:
+  port: 8080
+
 spring:
   application:
-   name : api-gateway
+    name: api-gateway
+
+  logging:
+    level:
+      org.springframework.cloud.gateway: DEBUG
 
   cloud:
     gateway:
-      routes:
-        - id: public-api
-          uri: http://localhost:8081
-          predicates:
-            - Path=/swagger-ui/**, /v3/api-docs/**, /swagger-resources/**
+      server:
+        webflux:
+          routes:
+            - id: user-service-user-api
+              uri: https://user-service-ngah.onrender.com
+              predicates:
+                - Path=/api/user/**
+              filters:
+                - StripPrefix=1
+
+            - id: user-service-auth-api
+              uri: https://user-service-ngah.onrender.com
+              predicates:
+                - Path=/api/authentication/**
+              filters:
+                - StripPrefix=1
+
+            - id: user-service-swagger
+              uri: https://user-service-ngah.onrender.com
+              predicates:
+                - Path=/user-service/v3/api-docs, /user-service/v3/api-docs/**
+              filters:
+                - StripPrefix=1
+
+springdoc:
+  gateway:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui/index.html
+    urls:
+      - name: user-service
+        url: /user-service/v3/api-docs
+
+jwt:
+  secret: "c4a7e5bc8d9a53b249f9e7a3eb8d44f4c281cfe6b327f0b2f86f5c9a7e3408d1"
