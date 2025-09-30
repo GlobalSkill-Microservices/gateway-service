@@ -35,6 +35,41 @@ spring:
               filters:
                 - StripPrefix=1
 
+            - id: forum-post-comment-api
+              uri: https://forumpost-service.onrender.com
+              predicates:
+                - Path=/api/comment/**
+              filters:
+                - StripPrefix=1
+
+            - id: forum-post-forum-post-api
+              uri: https://forumpost-service.onrender.com
+              predicates:
+                - Path=/api/forum-post/**
+              filters:
+                - StripPrefix=1
+
+            - id: forum-post-post-interaction-api
+              uri: https://forumpost-service.onrender.com
+              predicates:
+                - Path=/api/post-interaction/**
+              filters:
+                - StripPrefix=1
+
+            - id: forum-post-share-api
+              uri: https://forumpost-service.onrender.com
+              predicates:
+                - Path=/api/share/**
+              filters:
+                - StripPrefix=1
+
+            - id: forum-service-swagger
+              uri: https://forumpost-service.onrender.com
+              predicates:
+                - Path=/api/v3/api-docs, /api/v3/api-docs/**
+              filters:
+                - StripPrefix=1
+
 springdoc:
   gateway:
     enabled: true
@@ -42,6 +77,8 @@ springdoc:
     path: /swagger-ui/index.html
     urls:
       - name: user-service
+        url: /api/v3/api-docs
+      - name: forum-service
         url: /api/v3/api-docs
 
 jwt:
