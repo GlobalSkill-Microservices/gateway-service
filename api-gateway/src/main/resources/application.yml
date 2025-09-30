@@ -15,6 +15,13 @@ spring:
         webflux:
           routes:
             # -------------------- USER SERVICE ROUTES --------------------
+            - id: user-service-swagger
+              uri: https://user-service-ngah.onrender.com
+              predicates:
+                - Path=/api/user/v3/api-docs, /api/user/v3/api-docs/**
+              filters:
+                - StripPrefix=2
+
             - id: user-service-user-api
               uri: https://user-service-ngah.onrender.com
               predicates:
@@ -29,14 +36,13 @@ spring:
               filters:
                 - StripPrefix=1
 
-            - id: user-service-swagger
-              uri: https://user-service-ngah.onrender.com
+            # -------------------- FORUM SERVICE ROUTES --------------------
+            - id: forum-service-swagger
+              uri: https://forumpost-service.onrender.com
               predicates:
-                - Path=/api/user/v3/api-docs, /api/user/v3/api-docs/**
+                - Path=/api/forum/v3/api-docs, /api/forum/v3/api-docs/**
               filters:
                 - StripPrefix=2
-
-            # -------------------- FORUM SERVICE ROUTES --------------------
 
             - id: forum-post-comment-api
               uri: https://forumpost-service.onrender.com
@@ -65,13 +71,6 @@ spring:
                 - Path=/api/share/**
               filters:
                 - StripPrefix=1
-
-            - id: forum-service-swagger
-              uri: https://forumpost-service.onrender.com
-              predicates:
-                - Path=/api/forum/v3/api-docs, /api/forum/v3/api-docs/**
-              filters:
-                - StripPrefix=2
 
 # -------------------- SPRING-DOC CONFIGURATION --------------------
 springdoc:
