@@ -14,6 +14,7 @@ spring:
       server:
         webflux:
           routes:
+            # -------------------- USER SERVICE ROUTES --------------------
             - id: user-service-user-api
               uri: https://user-service-ngah.onrender.com
               predicates:
@@ -31,9 +32,11 @@ spring:
             - id: user-service-swagger
               uri: https://user-service-ngah.onrender.com
               predicates:
-                - Path=/api/v3/api-docs, /api/v3/api-docs/**
+                - Path=/api/user/v3/api-docs, /api/user/v3/api-docs/**
               filters:
-                - StripPrefix=1
+                - StripPrefix=2
+
+            # -------------------- FORUM SERVICE ROUTES --------------------
 
             - id: forum-post-comment-api
               uri: https://forumpost-service.onrender.com
@@ -66,10 +69,11 @@ spring:
             - id: forum-service-swagger
               uri: https://forumpost-service.onrender.com
               predicates:
-                - Path=/api/v3/api-docs, /api/v3/api-docs/**
+                - Path=/api/forum/v3/api-docs, /api/forum/v3/api-docs/**
               filters:
-                - StripPrefix=1
+                - StripPrefix=2
 
+# -------------------- SPRING-DOC CONFIGURATION --------------------
 springdoc:
   gateway:
     enabled: true
@@ -77,9 +81,9 @@ springdoc:
     path: /swagger-ui/index.html
     urls:
       - name: user-service
-        url: /api/v3/api-docs
+        url: /api/user/v3/api-docs
       - name: forum-service
-        url: /api/v3/api-docs
+        url: /api/forum/v3/api-docs
 
 jwt:
   secret: "c4a7e5bc8d9a53b249f9e7a3eb8d44f4c281cfe6b327f0b2f86f5c9a7e3408d1"
