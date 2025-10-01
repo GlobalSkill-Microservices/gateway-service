@@ -24,6 +24,7 @@ public class JwtAuthFilter implements GatewayFilter, Ordered {
 
                         if (userIdString != null) {
                             ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
+                                    .headers(httpHeaders -> httpHeaders.remove("X-User-ID"))
                                     .header("X-User-ID", userIdString)
                                     .build();
 
