@@ -1,6 +1,7 @@
 package com.globalskills.api_gateway.Config;
 
 import com.globalskills.api_gateway.Gateway.Exception.AuthenticationEntryPoint;
+import com.globalskills.api_gateway.Gateway.JwtAuthFilter;
 import io.jsonwebtoken.io.Decoders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
@@ -24,6 +26,9 @@ import java.util.List;
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
+
+    @Autowired
+    JwtAuthFilter jwtAuthFilter;
 
     @Autowired
     AuthenticationEntryPoint authenticationEntryPoint;
@@ -53,6 +58,8 @@ public class SecurityConfig {
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())
                         .authenticationEntryPoint(authenticationEntryPoint))
+                //chen filter sau khi da xac thuc jwt token
+                .addFilterAfter(jwtAuthFilter, SecurityWebFiltersOrder.AUTHENTICATION)
                 .build();
     }
 

@@ -35,7 +35,6 @@ spring:
                 - Path=/api/authentication/**
               filters:
                 - StripPrefix=1
-
             # -------------------- FORUM SERVICE ROUTES --------------------
             - id: forum-service-swagger
               uri: https://forumpost-service.onrender.com

@@ -10,15 +10,17 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+import org.springframework.web.server.WebFilter;
+import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
 @Component
-public class JwtAuthFilter implements GatewayFilter, Ordered {
+public class JwtAuthFilter implements WebFilter, Ordered {
 
     private final static Logger log = LoggerFactory.getLogger(JwtAuthFilter.class);
 
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         log.debug("🔐 JwtAuthFilter triggered for path: {}", exchange.getRequest().getPath());
 
         return exchange.getPrincipal()
@@ -59,12 +61,10 @@ public class JwtAuthFilter implements GatewayFilter, Ordered {
                     log.warn("⚠️ No principal found — proceeding without X-User-ID header");
                     return chain.filter(exchange);
                 }));
-
     }
-
 
     @Override
     public int getOrder() {
-        return 1;
+        return Ordered.HIGHEST_PRECEDENCE;
     }
 }
