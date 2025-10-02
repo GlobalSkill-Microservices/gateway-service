@@ -4,6 +4,7 @@ import com.globalskills.api_gateway.Gateway.Exception.AuthenticationEntryPoint;
 import com.globalskills.api_gateway.Gateway.JwtAuthFilter;
 import io.jsonwebtoken.io.Decoders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -15,12 +16,11 @@ import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Arrays;
-import java.util.List;
+
 
 
 @Configuration
@@ -36,30 +36,26 @@ public class SecurityConfig {
     @Autowired
     Environment env;
 
-    List<String> publicApis = List.of(
-            "/swagger-ui/**",
-            "/v3/api-docs/**",
-            "/swagger-resources/**",
-            "/api/user/v3/api-docs",
-            "/api/forum/v3/api-docs",
-            "/api/authentication/login",
-            "/api/authentication/register",
-            "/api/authentication/forgot-password"
-    );
+    @Autowired
+    PublicApiConfig publicApiConfig;
+
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+        String[] publicPath = publicApiConfig.publicApis().toArray(new String[0]);
         return http
                 .cors(corsSpec -> corsSpec.configurationSource(corsConfigurationSource()))
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers(publicApis.toArray(new String[0])).permitAll()
+                        .pathMatchers(publicPath).permitAll()
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())
                         .authenticationEntryPoint(authenticationEntryPoint))
-                //chen filter sau khi da xac thuc jwt token
-                .addFilterAfter(jwtAuthFilter, SecurityWebFiltersOrder.AUTHENTICATION)
+                // Chèn Filter NỘI BỘ này NGAY TRƯỚC quá trình AUTHORIZATION (Ủy quyền).
+                // Mục đích: Đảm bảo Principal (người dùng đã xác thực) đã được gán vào Context,
+                // cho phép Filter trích xuất User ID và chèn vào Header X-User-ID.
+                .addFilterBefore(jwtAuthFilter, SecurityWebFiltersOrder.AUTHORIZATION)
                 .build();
     }
 
