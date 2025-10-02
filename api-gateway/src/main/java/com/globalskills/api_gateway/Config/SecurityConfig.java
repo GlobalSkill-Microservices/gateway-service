@@ -1,5 +1,7 @@
 package com.globalskills.api_gateway.Config;
 
+import com.globalskills.api_gateway.Gateway.Exception.AuthenticationEntryPoint;
+import io.jsonwebtoken.io.Decoders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +26,9 @@ import java.util.List;
 public class SecurityConfig {
 
     @Autowired
+    AuthenticationEntryPoint authenticationEntryPoint;
+
+    @Autowired
     Environment env;
 
     List<String> publicApis = List.of(
@@ -46,14 +51,15 @@ public class SecurityConfig {
                         .pathMatchers(publicApis.toArray(new String[0])).permitAll()
                         .anyExchange().authenticated()
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())
+                        .authenticationEntryPoint(authenticationEntryPoint))
                 .build();
     }
 
     @Bean
     public ReactiveJwtDecoder reactiveJwtDecoder() {
         String jwtSecret = env.getProperty("jwt.secret");
-        byte[] keyBytes = jwtSecret.getBytes();
+        byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
         SecretKeySpec secretKey = new SecretKeySpec(keyBytes, "HmacSHA256");
         return NimbusReactiveJwtDecoder.withSecretKey(secretKey).build();
     }
@@ -64,7 +70,7 @@ public class SecurityConfig {
         config.addAllowedOriginPattern("*");
         config.setAllowCredentials(true);
         config.addAllowedHeader("*");
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")); // Quan trọng: thêm OPTIONS
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 
