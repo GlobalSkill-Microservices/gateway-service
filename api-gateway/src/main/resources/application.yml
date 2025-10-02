@@ -85,4 +85,4 @@ springdoc:
         url: /api/forum/v3/api-docs
 
 jwt:
-  secret: "c4a7e5bc8d9a53b249f9e7a3eb8d44f4c281cfe6b327f0b2f86f5c9a7e3408d1"
+  secret: "ZhA/MMY/9vj95sgNMUnQIG/VDOCywzYVcf+R+HEhokc="
