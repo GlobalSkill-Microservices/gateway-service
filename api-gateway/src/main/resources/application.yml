@@ -7,7 +7,7 @@ spring:
 
   logging:
     level:
-      org.springframework.cloud.gateway: DEBUG
+      root: DEBUG
 
   cloud:
     gateway:
@@ -50,6 +50,13 @@ spring:
               filters:
                 - StripPrefix=1
 
+            - id: forum-post-comment-api
+              uri: https://forumpost-service.onrender.com
+              predicates:
+                - Path=/api/comment-interaction/**
+              filters:
+                - StripPrefix=1
+
             - id: forum-post-forum-post-api
               uri: https://forumpost-service.onrender.com
               predicates:
@@ -61,13 +68,6 @@ spring:
               uri: https://forumpost-service.onrender.com
               predicates:
                 - Path=/api/post-interaction/**
-              filters:
-                - StripPrefix=1
-
-            - id: forum-post-share-api
-              uri: https://forumpost-service.onrender.com
-              predicates:
-                - Path=/api/share/**
               filters:
                 - StripPrefix=1
 

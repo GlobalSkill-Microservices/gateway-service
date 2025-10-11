@@ -1,10 +1,9 @@
 package com.globalskills.api_gateway.Config;
 
 import com.globalskills.api_gateway.Gateway.Exception.AuthenticationEntryPoint;
-import com.globalskills.api_gateway.Gateway.JwtAuthFilter;
+import com.globalskills.api_gateway.Gateway.Filter.JwtAuthFilter;
 import io.jsonwebtoken.io.Decoders;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -16,6 +15,7 @@ import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
 import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -76,8 +76,6 @@ public class SecurityConfig {
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
-
         return source;
     }
-
 }
