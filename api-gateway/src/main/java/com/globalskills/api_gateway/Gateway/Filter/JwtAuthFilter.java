@@ -1,11 +1,9 @@
-package com.globalskills.api_gateway.Gateway;
+package com.globalskills.api_gateway.Gateway.Filter;
 
 import com.globalskills.api_gateway.Config.PublicApiConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.security.core.context.ReactiveSecurityContextHolder;
@@ -18,8 +16,6 @@ import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
-
-import java.util.List;
 
 @Component
 public class JwtAuthFilter implements WebFilter, Ordered {
