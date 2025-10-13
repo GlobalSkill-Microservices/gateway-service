@@ -71,6 +71,36 @@ spring:
               filters:
                 - StripPrefix=1
 
+            # -------------------- PAYMENT SERVICE ROUTES --------------------
+            - id: payment-service-swagger
+              uri: https://payment-service-j6jd.onrender.com
+              predicates:
+                - Path=/api/payment/v3/api-docs, /api/payment/v3/api-docs/**
+              filters:
+                - StripPrefix=2
+
+            - id: payment-service-invoice-api
+              uri: https://payment-service-j6jd.onrender.com
+              predicates:
+                - Path=/api/invoice/**
+              filters:
+                - StripPrefix=1
+
+            - id: payment-service-product-api
+              uri: https://payment-service-j6jd.onrender.com
+              predicates:
+                - Path=/api/product/**
+              filters:
+                - StripPrefix=1
+
+            - id: payment-service-wallet-api
+              uri: https://payment-service-j6jd.onrender.com
+              predicates:
+                - Path=/api/wallet/**
+              filters:
+                - StripPrefix=1
+
+
 # -------------------- SPRING-DOC CONFIGURATION --------------------
 springdoc:
   gateway:
@@ -82,6 +112,8 @@ springdoc:
         url: /api/user/v3/api-docs
       - name: forum-service
         url: /api/forum/v3/api-docs
+      - name: payment-service
+        url: /api/payment/v3/api-docs
 
 jwt:
   secret: "ZhA/MMY/9vj95sgNMUnQIG/VDOCywzYVcf+R+HEhokc="
