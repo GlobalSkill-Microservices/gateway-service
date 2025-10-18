@@ -14,6 +14,35 @@ spring:
       server:
         webflux:
           routes:
+            # -------------------- BOOKING SERVICE ROUTES --------------------
+            - id: booking-service-swagger
+              uri: https://booking-service-2qf5.onrender.com
+              predicates:
+                - Path=/api/booking/v3/api-docs, /api/booking/v3/api-docs/**
+              filters:
+                - StripPrefix=2
+
+            - id: booking-service-booking-api
+              uri: https://booking-service-2qf5.onrender.com
+              predicates:
+                - Path=/api/booking/**
+              filters:
+                - StripPrefix=1
+
+            - id: booking-service-calendar-api
+              uri: https://booking-service-2qf5.onrender.com
+              predicates:
+                - Path=/api/calendar/**
+              filters:
+                - StripPrefix=1
+
+            - id: booking-service-timeslot-api
+              uri: https://booking-service-2qf5.onrender.com
+              predicates:
+                - Path=/api/timeslot/**
+              filters:
+                - StripPrefix=1
+
             # -------------------- USER SERVICE ROUTES --------------------
             - id: user-service-swagger
               uri: https://user-service-ngah.onrender.com
@@ -114,6 +143,8 @@ springdoc:
         url: /api/forum/v3/api-docs
       - name: payment-service
         url: /api/payment/v3/api-docs
+      - name: booking-service
+        url: /api/booking/v3/api-docs
 
 jwt:
   secret: "ZhA/MMY/9vj95sgNMUnQIG/VDOCywzYVcf+R+HEhokc="

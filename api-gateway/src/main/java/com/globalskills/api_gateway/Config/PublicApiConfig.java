@@ -14,6 +14,7 @@ public class PublicApiConfig {
             "/api/user/v3/api-docs",
             "/api/forum/v3/api-docs",
             "/api/payment/v3/api-docs",
+            "/api/booking/v3/api-docs",
             "/api/authentication/login",
             "/api/authentication/register",
             "/api/authentication/forgot-password"
