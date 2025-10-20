@@ -122,10 +122,10 @@ spring:
               filters:
                 - StripPrefix=1
 
-            - id: payment-service-wallet-api
+            - id: payment-service-dashboard-api
               uri: https://payment-service-j6jd.onrender.com
               predicates:
-                - Path=/api/wallet/**
+                - Path=/api/dashboard/**
               filters:
                 - StripPrefix=1
 
