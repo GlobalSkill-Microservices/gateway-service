@@ -16,6 +16,7 @@ public class PublicApiConfig {
             "/api/payment/v3/api-docs",
             "/api/booking/v3/api-docs",
             "/api/invoice/webhook",
+            "/api/user-client/**",
             "/api/authentication/login",
             "/api/authentication/register",
             "/api/authentication/forgot-password"
