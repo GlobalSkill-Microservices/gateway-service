@@ -17,6 +17,9 @@ import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+import java.util.Map;
+
 @Component
 public class JwtAuthFilter implements WebFilter, Ordered {
 
@@ -26,15 +29,31 @@ public class JwtAuthFilter implements WebFilter, Ordered {
     private final static Logger log = LoggerFactory.getLogger(JwtAuthFilter.class);
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
-    private boolean isPublicPath(String path) {
-        return publicApiConfig.publicApis().stream().anyMatch(publicPath -> pathMatcher.match(publicPath, path));
+    private boolean isPublicApi(String method, String path) {
+        boolean isMethodAgnosticPublic = publicApiConfig.getPublicApis().stream()
+                .anyMatch(publicPath -> pathMatcher.match(publicPath, path));
+        if (isMethodAgnosticPublic) {
+            return true;
+        }
+        String upperCaseMethod = method.toUpperCase();
+        Map<String, List<String>> publicMap = publicApiConfig.getPublicApiMap();
+        List<String> publicPathsForMethod = publicMap.get(upperCaseMethod);
+        if (publicPathsForMethod == null || publicPathsForMethod.isEmpty()) {
+            return false;
+        }
+        return publicPathsForMethod.stream()
+                .anyMatch(publicPath -> pathMatcher.match(publicPath, path));
     }
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+
         String path = exchange.getRequest().getPath().value();
-        if (isPublicPath(path)) {
-            log.debug("🌐 Public API path, skipping principal check: {}", path);
+
+        String method = exchange.getRequest().getMethod().name();
+
+        if (isPublicApi(method, path)) {
+            log.debug("🌐 Public API [{} {}], skipping principal check.", method, path);
             return chain.filter(exchange);
         }
         log.debug("🔐 JwtAuthFilter triggered for path: {}", exchange.getRequest().getPath());

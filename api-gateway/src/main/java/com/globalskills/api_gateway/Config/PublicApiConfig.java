@@ -1,13 +1,18 @@
 package com.globalskills.api_gateway.Config;
 
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+@Getter
 @Component
 public class PublicApiConfig {
 
-    List<String> publicApis = List.of(
+    private final List<String> publicApis = List.of(
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/swagger-resources/**",
@@ -16,13 +21,18 @@ public class PublicApiConfig {
             "/api/payment/v3/api-docs",
             "/api/booking/v3/api-docs",
             "/api/invoice/webhook",
+            "/api/user-client/**",
             "/api/authentication/login",
             "/api/authentication/register",
             "/api/authentication/forgot-password"
     );
 
-    public List<String> publicApis() {
-        return publicApis;
-    }
+    private final Map<String, List<String>> publicApiMap = Map.of(
+            "GET", List.of(
+                    "/api/comment/**",
+                    "/api/forum-post/**",
+                    "/api/post-interaction/**"
+            )
+    );
 
 }
