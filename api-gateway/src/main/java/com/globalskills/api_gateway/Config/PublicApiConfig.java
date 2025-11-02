@@ -20,7 +20,6 @@ public class PublicApiConfig {
             "/api/forum/v3/api-docs",
             "/api/payment/v3/api-docs",
             "/api/booking/v3/api-docs",
-            "/api/invoice/webhook",
             "/api/user-client/**",
             "/api/authentication/login",
             "/api/authentication/register",
@@ -30,8 +29,14 @@ public class PublicApiConfig {
     private final Map<String, List<String>> publicApiMap = Map.of(
             "GET", List.of(
                     "/api/comment/**",
-                    "/api/forum-post/**",
+                    "/api/forum-post",
+                    "/api/forum-post/trending-post",
+                    "/api/forum-post/shared/{forumPostId}",
                     "/api/post-interaction/**"
+            ),
+            "Post",List.of(
+                    "/api/invoice/webhook",
+                    "/api/booking/webhook"
             )
     );
 
