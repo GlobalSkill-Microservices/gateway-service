@@ -5,8 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 @Getter
 @Component
@@ -20,7 +19,9 @@ public class PublicApiConfig {
             "/api/forum/v3/api-docs",
             "/api/payment/v3/api-docs",
             "/api/booking/v3/api-docs",
+            "/api/webhook/**",
             "/api/user-client/**",
+            "/api/booking-client/**",
             "/api/authentication/login",
             "/api/authentication/register",
             "/api/authentication/forgot-password"
@@ -33,10 +34,6 @@ public class PublicApiConfig {
                     "/api/forum-post/trending-post",
                     "/api/forum-post/shared/{forumPostId}",
                     "/api/post-interaction/**"
-            ),
-            "Post",List.of(
-                    "/api/invoice/webhook",
-                    "/api/booking/webhook"
             )
     );
 

@@ -43,6 +43,13 @@ spring:
               filters:
                 - StripPrefix=1
 
+            - id: booking-service-client-api
+              uri: https://booking-service-2qf5.onrender.com
+              predicates:
+                - Path=/api/booking-client/**
+              filters:
+                - StripPrefix=1
+
             # -------------------- USER SERVICE ROUTES --------------------
             - id: user-service-swagger
               uri: https://user-service-ngah.onrender.com
@@ -133,6 +140,13 @@ spring:
               uri: https://payment-service-j6jd.onrender.com
               predicates:
                 - Path=/api/dashboard/**
+              filters:
+                - StripPrefix=1
+
+            - id: payment-service-webhook-api
+              uri: https://payment-service-j6jd.onrender.com
+              predicates:
+                - Path=/api/webhook/**
               filters:
                 - StripPrefix=1
 
