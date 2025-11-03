@@ -85,6 +85,13 @@ spring:
                 - Path=/api/chat/**
               filters:
                 - StripPrefix=1
+
+            - id: user-service-websocket-api
+              uri: https://user-service-ngah.onrender.com
+              predicates:
+                - Path=/api/websocket/**
+              filters:
+                - StripPrefix=1
             # -------------------- FORUM SERVICE ROUTES --------------------
             - id: forum-service-swagger
               uri: https://forumpost-service.onrender.com
