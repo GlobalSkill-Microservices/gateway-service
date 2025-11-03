@@ -78,6 +78,13 @@ spring:
                 - Path=/api/user-client/**
               filters:
                 - StripPrefix=1
+
+            - id: user-service-chat-api
+              uri: https://user-service-ngah.onrender.com
+              predicates:
+                - Path=/api/chat/**
+              filters:
+                - StripPrefix=1
             # -------------------- FORUM SERVICE ROUTES --------------------
             - id: forum-service-swagger
               uri: https://forumpost-service.onrender.com
