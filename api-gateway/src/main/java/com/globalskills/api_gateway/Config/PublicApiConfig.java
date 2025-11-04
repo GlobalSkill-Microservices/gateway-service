@@ -33,7 +33,9 @@ public class PublicApiConfig {
                     "/api/forum-post",
                     "/api/forum-post/trending-post",
                     "/api/forum-post/shared/{forumPostId}",
-                    "/api/post-interaction/**"
+                    "/api/post-interaction/**",
+                    "/api/user/mentors",
+                    "/api/booking/top/mentors"
             )
     );
 
