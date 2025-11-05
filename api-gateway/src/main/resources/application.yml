@@ -161,7 +161,7 @@ spring:
                 - StripPrefix=1
 
             - id: payment-service-webhook-api
-              uri: wss://payment-service-j6jd.onrender.com
+              uri: https://payment-service-j6jd.onrender.com
               predicates:
                 - Path=/api/webhook/**
               filters:
