@@ -13,156 +13,162 @@ spring:
     gateway:
       server:
         webflux:
+          httpclient:
+            websocket:
+              max-frame-payload-length: 65536
+
+          default-filters:
+            - name: PreserveHostHeader
           routes:
-            # -------------------- BOOKING SERVICE ROUTES --------------------
-            - id: booking-service-swagger
-              uri: https://booking-service-2qf5.onrender.com
-              predicates:
-                - Path=/api/booking/v3/api-docs, /api/booking/v3/api-docs/**
-              filters:
-                - StripPrefix=2
+                # -------------------- BOOKING SERVICE ROUTES --------------------
+                - id: booking-service-swagger
+                  uri: https://booking-service-2qf5.onrender.com
+                  predicates:
+                    - Path=/api/booking/v3/api-docs, /api/booking/v3/api-docs/**
+                  filters:
+                    - StripPrefix=2
 
-            - id: booking-service-booking-api
-              uri: https://booking-service-2qf5.onrender.com
-              predicates:
-                - Path=/api/booking/**
-              filters:
-                - StripPrefix=1
+                - id: booking-service-booking-api
+                  uri: https://booking-service-2qf5.onrender.com
+                  predicates:
+                    - Path=/api/booking/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: booking-service-calendar-api
-              uri: https://booking-service-2qf5.onrender.com
-              predicates:
-                - Path=/api/calendar/**
-              filters:
-                - StripPrefix=1
+                - id: booking-service-calendar-api
+                  uri: https://booking-service-2qf5.onrender.com
+                  predicates:
+                    - Path=/api/calendar/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: booking-service-timeslot-api
-              uri: https://booking-service-2qf5.onrender.com
-              predicates:
-                - Path=/api/timeslot/**
-              filters:
-                - StripPrefix=1
+                - id: booking-service-timeslot-api
+                  uri: https://booking-service-2qf5.onrender.com
+                  predicates:
+                    - Path=/api/timeslot/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: booking-service-client-api
-              uri: https://booking-service-2qf5.onrender.com
-              predicates:
-                - Path=/api/booking-client/**
-              filters:
-                - StripPrefix=1
+                - id: booking-service-client-api
+                  uri: https://booking-service-2qf5.onrender.com
+                  predicates:
+                    - Path=/api/booking-client/**
+                  filters:
+                    - StripPrefix=1
 
-            # -------------------- USER SERVICE ROUTES --------------------
-            - id: user-service-swagger
-              uri: https://user-service-ngah.onrender.com
-              predicates:
-                - Path=/api/user/v3/api-docs, /api/user/v3/api-docs/**
-              filters:
-                - StripPrefix=2
+                # -------------------- USER SERVICE ROUTES --------------------
+                - id: user-service-swagger
+                  uri: https://user-service-ngah.onrender.com
+                  predicates:
+                    - Path=/api/user/v3/api-docs, /api/user/v3/api-docs/**
+                  filters:
+                    - StripPrefix=2
 
-            - id: user-service-user-api
-              uri: https://user-service-ngah.onrender.com
-              predicates:
-                - Path=/api/user/**
-              filters:
-                - StripPrefix=1
+                - id: user-service-user-api
+                  uri: https://user-service-ngah.onrender.com
+                  predicates:
+                    - Path=/api/user/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: user-service-auth-api
-              uri: https://user-service-ngah.onrender.com
-              predicates:
-                - Path=/api/authentication/**
-              filters:
-                - StripPrefix=1
+                - id: user-service-auth-api
+                  uri: https://user-service-ngah.onrender.com
+                  predicates:
+                    - Path=/api/authentication/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: user-service-client-api
-              uri: https://user-service-ngah.onrender.com
-              predicates:
-                - Path=/api/user-client/**
-              filters:
-                - StripPrefix=1
+                - id: user-service-client-api
+                  uri: https://user-service-ngah.onrender.com
+                  predicates:
+                    - Path=/api/user-client/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: user-service-chat-api
-              uri: https://user-service-ngah.onrender.com
-              predicates:
-                - Path=/api/chat/**
-              filters:
-                - StripPrefix=1
+                - id: user-service-chat-api
+                  uri: https://user-service-ngah.onrender.com
+                  predicates:
+                    - Path=/api/chat/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: user-service-websocket-api
-              uri: https://user-service-ngah.onrender.com
-              predicates:
-                - Path=/api/websocket/**
-              filters:
-                - StripPrefix=1
-            # -------------------- FORUM SERVICE ROUTES --------------------
-            - id: forum-service-swagger
-              uri: https://forumpost-service.onrender.com
-              predicates:
-                - Path=/api/forum/v3/api-docs, /api/forum/v3/api-docs/**
-              filters:
-                - StripPrefix=2
+                - id: user-service-websocket-api
+                  uri: wss://user-service-ngah.onrender.com
+                  predicates:
+                    - Path=/api/websocket/**
+                  filters:
+                    - StripPrefix=1
+                # -------------------- FORUM SERVICE ROUTES --------------------
+                - id: forum-service-swagger
+                  uri: https://forumpost-service.onrender.com
+                  predicates:
+                    - Path=/api/forum/v3/api-docs, /api/forum/v3/api-docs/**
+                  filters:
+                    - StripPrefix=2
 
-            - id: forum-post-comment-api
-              uri: https://forumpost-service.onrender.com
-              predicates:
-                - Path=/api/comment/**
-              filters:
-                - StripPrefix=1
+                - id: forum-post-comment-api
+                  uri: https://forumpost-service.onrender.com
+                  predicates:
+                    - Path=/api/comment/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: forum-post-comment-api
-              uri: https://forumpost-service.onrender.com
-              predicates:
-                - Path=/api/comment-interaction/**
-              filters:
-                - StripPrefix=1
+                - id: forum-post-comment-api
+                  uri: https://forumpost-service.onrender.com
+                  predicates:
+                    - Path=/api/comment-interaction/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: forum-post-forum-post-api
-              uri: https://forumpost-service.onrender.com
-              predicates:
-                - Path=/api/forum-post/**
-              filters:
-                - StripPrefix=1
+                - id: forum-post-forum-post-api
+                  uri: https://forumpost-service.onrender.com
+                  predicates:
+                    - Path=/api/forum-post/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: forum-post-post-interaction-api
-              uri: https://forumpost-service.onrender.com
-              predicates:
-                - Path=/api/post-interaction/**
-              filters:
-                - StripPrefix=1
+                - id: forum-post-post-interaction-api
+                  uri: https://forumpost-service.onrender.com
+                  predicates:
+                    - Path=/api/post-interaction/**
+                  filters:
+                    - StripPrefix=1
 
-            # -------------------- PAYMENT SERVICE ROUTES --------------------
-            - id: payment-service-swagger
-              uri: https://payment-service-j6jd.onrender.com
-              predicates:
-                - Path=/api/payment/v3/api-docs, /api/payment/v3/api-docs/**
-              filters:
-                - StripPrefix=2
+                # -------------------- PAYMENT SERVICE ROUTES --------------------
+                - id: payment-service-swagger
+                  uri: https://payment-service-j6jd.onrender.com
+                  predicates:
+                    - Path=/api/payment/v3/api-docs, /api/payment/v3/api-docs/**
+                  filters:
+                    - StripPrefix=2
 
-            - id: payment-service-invoice-api
-              uri: https://payment-service-j6jd.onrender.com
-              predicates:
-                - Path=/api/invoice/**
-              filters:
-                - StripPrefix=1
+                - id: payment-service-invoice-api
+                  uri: https://payment-service-j6jd.onrender.com
+                  predicates:
+                    - Path=/api/invoice/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: payment-service-product-api
-              uri: https://payment-service-j6jd.onrender.com
-              predicates:
-                - Path=/api/product/**
-              filters:
-                - StripPrefix=1
+                - id: payment-service-product-api
+                  uri: https://payment-service-j6jd.onrender.com
+                  predicates:
+                    - Path=/api/product/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: payment-service-dashboard-api
-              uri: https://payment-service-j6jd.onrender.com
-              predicates:
-                - Path=/api/dashboard/**
-              filters:
-                - StripPrefix=1
+                - id: payment-service-dashboard-api
+                  uri: https://payment-service-j6jd.onrender.com
+                  predicates:
+                    - Path=/api/dashboard/**
+                  filters:
+                    - StripPrefix=1
 
-            - id: payment-service-webhook-api
-              uri: https://payment-service-j6jd.onrender.com
-              predicates:
-                - Path=/api/webhook/**
-              filters:
-                - StripPrefix=1
+                - id: payment-service-webhook-api
+                  uri: https://payment-service-j6jd.onrender.com
+                  predicates:
+                    - Path=/api/webhook/**
+                  filters:
+                    - StripPrefix=1
 
 
 # -------------------- SPRING-DOC CONFIGURATION --------------------
