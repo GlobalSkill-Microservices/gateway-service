@@ -20,6 +20,7 @@ public class PublicApiConfig {
             "/api/payment/v3/api-docs",
             "/api/booking/v3/api-docs",
             "/api/webhook/**",
+            "/api/websocket/**",
             "/api/user-client/**",
             "/api/booking-client/**",
             "/api/authentication/login",
